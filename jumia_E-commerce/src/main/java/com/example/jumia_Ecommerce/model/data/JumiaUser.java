@@ -1,6 +1,6 @@
 package com.example.jumia_Ecommerce.model.data;
 
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,14 +9,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
+@Entity
 public class JumiaUser {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String userName;
     private String password;
     private String phoneNumber;
+    @Column(nullable = false, unique = true)
     private String emailAddress;
     private String mobileNetwork;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
 }

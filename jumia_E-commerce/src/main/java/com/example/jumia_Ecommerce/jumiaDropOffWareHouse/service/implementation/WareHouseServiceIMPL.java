@@ -20,11 +20,11 @@ public class WareHouseServiceIMPL implements WareHouseService {
 
     @Override
     public WareHouseResponse registerNewWareHouse(WareHouseRequest wareHouseRequest1) {
-        if (warehouseRepository.ifExistsByWarehouseName(wareHouseRequest1.getWareHouesAddress().getStreetName())) throw new WareHouseRegistrationException("ware house already exist");
-        warehouseRepository.save(WareHouse.builder()
-        .wareHouesAddress(wareHouseRequest1.getWareHouesAddress())
-        .wareHouseName(wareHouseRequest1.getWareHouesAddress().getStreetName())
-        .build());
+    if (warehouseRepository.existsByWareHouseName(wareHouseRequest1.getWareHouesAddress().getStreetName())) throw new WareHouseRegistrationException("ware house already exist");
+    warehouseRepository.save(WareHouse.builder()
+    .wareHouesAddress(wareHouseRequest1.getWareHouesAddress())
+    .wareHouseName(wareHouseRequest1.getWareHouesAddress().getStreetName())
+    .build());
         return WareHouseResponse.builder().warehouseName(wareHouseRequest1.getWareHouesAddress().getStreetName()).build();
     }
 }

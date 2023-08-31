@@ -23,7 +23,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
-    @JoinColumn(name = "cart_id")
     private Cart cart;
     @Column(nullable = false)
     private String productName;
@@ -35,10 +34,8 @@ public class Product {
     private Categories category;
     private long quantity;
 
-    @JoinColumn(name = "supplier_id", nullable = false)
     @ManyToOne
     private ProductSupplier productSupplier;
     @ManyToOne
-    @JoinColumn(name = "wareHouse_id", nullable = false)
     private WareHouse wareHouse;
 }
