@@ -4,4 +4,5 @@ import com.example.jumia_Ecommerce.model.data.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AddressRepository extends JpaRepository<Address, Long> {
+    Address findAddressByStreetName(String streetName);
 }

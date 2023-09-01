@@ -16,11 +16,11 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String buildingNumber;
+    @Column(nullable = false)
     private String streetName;
     private String locationGovernmentName;
     private String state;
-    @Column(nullable = false)
-    private long user_id;
+
 //    @OneToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "customer_id")
 //     private Customer customer;

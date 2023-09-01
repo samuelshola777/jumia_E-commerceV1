@@ -1,17 +1,22 @@
 package com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.interfaces;
 
+import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.requests.UpdateWareHouseRequest;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.requests.WareHouseRequest;
 import com.example.jumia_Ecommerce.model.data.Address;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@RequiredArgsConstructor
+
 class WareHouseServiceTest {
-    private final WareHouseService wareHouseService;
+    @Autowired
+    private WareHouseService wareHouseService;
    private Address address1;
    private Address address2;
    private Address address3;
@@ -20,6 +25,7 @@ class WareHouseServiceTest {
     private WareHouseRequest wareHouseRequest2;
     private WareHouseRequest wareHouseRequest3;
     private WareHouseRequest wareHouseRequest4;
+    private UpdateWareHouseRequest updateWareHouseRequest;
 
     @BeforeEach
     void setUp() {
@@ -32,6 +38,7 @@ class WareHouseServiceTest {
        wareHouseRequest1.setWareHouesAddress(address1);
 
        wareHouseRequest2 = new WareHouseRequest();
+       address2 = new Address();
        address2.setBuildingNumber("67");
        address2.setState("lagos");
        address2.setStreetName("sango");
@@ -39,21 +46,39 @@ class WareHouseServiceTest {
        wareHouseRequest2.setWareHouesAddress(address2);
 
        wareHouseRequest3 = new WareHouseRequest();
+       address3 = new Address();
        address3.setBuildingNumber("34");
        address3.setState("lagos");
        address3.setStreetName("mongoMarry");
        address3.setLocationGovernmentName("yaba");
+       wareHouseRequest3.setWareHouesAddress(address3);
 
        wareHouseRequest4 = new WareHouseRequest();
+       address4 = new Address();
        address4.setBuildingNumber("70");
        address4.setState("lagos");
        address4.setStreetName("oshodi");
        address4.setLocationGovernmentName("oshodi");
        wareHouseRequest4.setWareHouesAddress(address4);
 
+       updateWareHouseRequest = new  UpdateWareHouseRequest();
+       updateWareHouseRequest.setOldWareHouseName("yaba");
+       updateWareHouseRequest.setNewWareHouseName("oyinbgo");
+
     }
 
     @AfterEach
     void tearDown() {
+    }
+    @Test
+    void createWareTes(){
+        assertNotNull(wareHouseService.registerNewWareHouse(wareHouseRequest1));
+        assertNotNull(wareHouseService.registerNewWareHouse(wareHouseRequest2));
+        assertNotNull(wareHouseService.registerNewWareHouse(wareHouseRequest3));
+        assertNotNull(wareHouseService.registerNewWareHouse(wareHouseRequest4));
+    }
+    @Test
+    void updateWareHouse(){
+        assertEquals("oyinbgo",wareHouseService.updateWareHouse( updateWareHouseRequest).getWarehouseName());
     }
 }

@@ -14,8 +14,11 @@ public class JumiaUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false, unique = true)
     private String userName;
+    @Column(nullable = false, unique = true)
     private String password;
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
     @Column(nullable = false, unique = true)
     private String emailAddress;
