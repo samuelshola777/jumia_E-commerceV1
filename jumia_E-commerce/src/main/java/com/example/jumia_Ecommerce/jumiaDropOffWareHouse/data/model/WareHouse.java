@@ -23,12 +23,16 @@ public class WareHouse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     private Address wareHouesAddress;
-
+    private boolean loggedIn;
     private String wareHouseName;
     @Timestamp
     private LocalDateTime createAt;
+    @Timestamp
+    private LocalDateTime lastUpdated;
+    private String password;
+
 
     @OneToMany(mappedBy = "wareHouse", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> listOfProducts = new ArrayList<>();

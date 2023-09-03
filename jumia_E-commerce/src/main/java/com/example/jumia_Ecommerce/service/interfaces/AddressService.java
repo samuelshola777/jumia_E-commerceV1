@@ -6,5 +6,6 @@ import com.example.jumia_Ecommerce.model.data.Address;
 public interface AddressService {
     Address savedAddress(Address address);
    Address findAddressByStreetName(String streetName);
+  void deleteAddressByStreetName(String streetName);
 
 }

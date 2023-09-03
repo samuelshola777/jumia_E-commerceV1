@@ -2,6 +2,7 @@ package com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.implementation
 
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.requests.UpdateWareHouseRequest;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.requests.WareHouseRequest;
+import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.response.WareHouseLoginResponse;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.response.WareHouseResponse;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.model.WareHouse;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.repository.WareHouseRepository;
@@ -12,6 +13,8 @@ import com.example.jumia_Ecommerce.service.interfaces.AddressService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -29,6 +32,7 @@ public class WareHouseServiceIMPL implements WareHouseService {
         Address savedAddress = addressService.savedAddress(wareHouseRequest.getWareHouesAddress());
         WareHouse newWareHouse = WareHouse.builder()
                 .wareHouesAddress(savedAddress)
+                .createAt(LocalDateTime.now())
                 .wareHouseName(wareHouseName)
                 .build();
         wareHouseRepository.save(newWareHouse);
@@ -40,7 +44,7 @@ public class WareHouseServiceIMPL implements WareHouseService {
     if (wareHouseRepository.existsByWareHouseName(updateWareHouseRequest.getNewWareHouseName()))
         throw new WareHouseRegistrationException("the name "+updateWareHouseRequest.getNewWareHouseName()+" already exists");
     WareHouse foundWareHouse = findWareHouseByName(updateWareHouseRequest.getOldWareHouseName());
-    Address foundAddress = addressService.findAddressByStreetName(updateWareHouseRequest.getOldWareHouseName());
+    Address foundAddress = foundWareHouse.getWareHouesAddress();
         if (updateWareHouseRequest.getState() != null){
             foundAddress.setState(updateWareHouseRequest.getState());
         }
@@ -55,6 +59,7 @@ public class WareHouseServiceIMPL implements WareHouseService {
         }
         foundWareHouse.setWareHouesAddress(foundAddress);
         foundWareHouse.setWareHouseName(updateWareHouseRequest.getNewWareHouseName());
+        foundWareHouse.setLastUpdated(LocalDateTime.now());
         wareHouseRepository.save(foundWareHouse);
         return WareHouseResponse.builder().warehouseName(foundWareHouse.getWareHouseName()).build();
     }
@@ -65,6 +70,28 @@ public class WareHouseServiceIMPL implements WareHouseService {
         if (foundWareHouse == null)
         throw new WareHouseRegistrationException("warehouse with name "+wareHouseName+" does not exist");
         return foundWareHouse;
+    }
+
+    @Override
+    public void deleteWareHouseByName(String wareHouseName) {
+        addressService.deleteAddressByStreetName(wareHouseName);
+    wareHouseRepository.delete(findWareHouseByName(wareHouseName));
+    }
+
+    @Override
+    public long countWareHouse() {
+        return wareHouseRepository.count();
+    }
+
+    @Override
+    public void deleteAllWareHouse() {
+        wareHouseRepository.deleteAll();
+    }
+
+    @Override
+    public WareHouseLoginResponse loginToWareHouseDashBoard(String wareHouseName, String password) {
+
+        return null;
     }
 
 }

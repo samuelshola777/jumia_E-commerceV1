@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AddressRepository extends JpaRepository<Address, Long> {
     Address findAddressByStreetName(String streetName);
+
+    void deleteByStreetName(String streetName);
 }

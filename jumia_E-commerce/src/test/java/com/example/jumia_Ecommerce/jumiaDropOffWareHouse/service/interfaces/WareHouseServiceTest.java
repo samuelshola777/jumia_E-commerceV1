@@ -30,6 +30,7 @@ class WareHouseServiceTest {
     @BeforeEach
     void setUp() {
         wareHouseRequest1 = new WareHouseRequest();
+        wareHouseRequest1.setPassword("blueSEa");
         address1 = new Address();
         address1.setBuildingNumber("3");
         address1.setState("lagos");
@@ -38,6 +39,7 @@ class WareHouseServiceTest {
        wareHouseRequest1.setWareHouesAddress(address1);
 
        wareHouseRequest2 = new WareHouseRequest();
+        wareHouseRequest2.setPassword("blueBoat");
        address2 = new Address();
        address2.setBuildingNumber("67");
        address2.setState("lagos");
@@ -46,6 +48,7 @@ class WareHouseServiceTest {
        wareHouseRequest2.setWareHouesAddress(address2);
 
        wareHouseRequest3 = new WareHouseRequest();
+        wareHouseRequest3.setPassword("blueShip");
        address3 = new Address();
        address3.setBuildingNumber("34");
        address3.setState("lagos");
@@ -54,6 +57,7 @@ class WareHouseServiceTest {
        wareHouseRequest3.setWareHouesAddress(address3);
 
        wareHouseRequest4 = new WareHouseRequest();
+        wareHouseRequest4.setPassword("blueboat");
        address4 = new Address();
        address4.setBuildingNumber("70");
        address4.setState("lagos");
@@ -80,5 +84,20 @@ class WareHouseServiceTest {
     @Test
     void updateWareHouse(){
         assertEquals("oyinbgo",wareHouseService.updateWareHouse( updateWareHouseRequest).getWarehouseName());
+    }
+    @Test
+    void deleteWareHouse(){
+        assertDoesNotThrow(()->{
+            wareHouseService.deleteWareHouseByName("oyinbgo");
+        });
+    }
+    @Test
+    void deleteAllWareHouse(){
+        wareHouseService.deleteAllWareHouse();
+        assertEquals(0, wareHouseService.countWareHouse());
+    }
+    @Test
+    void loginToWareHouseDashBoard(){
+    assertEquals(true,wareHouseService.loginToWareHouseDashBoard("mongoMarry","blueship").isLoggedIn());
     }
 }

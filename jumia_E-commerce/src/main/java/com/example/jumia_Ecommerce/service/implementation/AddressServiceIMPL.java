@@ -26,5 +26,10 @@ public class AddressServiceIMPL implements AddressService {
         return foundAddress;
     }
 
+    @Override
+    public void deleteAddressByStreetName(String streetName) {
+       addressRepository.deleteByStreetName(streetName);
+    }
+
 
 }

@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class WareHouseRequest {
     private Address wareHouesAddress;
     private String wareHouseName;
+    private String password;
 }
