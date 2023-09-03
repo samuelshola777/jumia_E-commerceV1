@@ -26,6 +26,6 @@ public class Cart {
     private Customer customer;
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<Product> listOfProducts = new ArrayList<>();
 }

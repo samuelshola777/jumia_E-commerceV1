@@ -32,4 +32,17 @@ public class WareHouseLoginResponse {
     private final List<ProductResponse> listOfTravelProducts = new ArrayList<>();
 
 
+    private long numberOfElectronicProducts = listOfElectronicProducts.size();
+    private long numberOfFashionProducts =      listOfFashionProducts.size();
+    private long numberOfFoodProducts = listOfFoodProducts.size();
+    private long numberOfHomeProducts = listOfHomeProducts.size();
+    private long numberOfSportProducts = listOfSportProducts.size();
+    private long numberOfBookProducts = listOfBookProducts.size();
+    private long numberOfPetProducts = listOfPetProducts.size();
+    private long numberOfBabyProducts = listOfBabyProducts.size();
+    private long numberOfHealthProducts = listOfHealthProducts.size();
+    private long numberOfHospitalProducts = listOfHospitalProducts.size();
+    private long numberOfTravelProducts = listOfTravelProducts.size();
+
+
 }

@@ -90,6 +90,9 @@ public class WareHouseServiceIMPL implements WareHouseService {
 
     @Override
     public WareHouseLoginResponse loginToWareHouseDashBoard(String wareHouseName, String password) {
+        WareHouse foundWareHouse = findWareHouseByName(wareHouseName);
+        if (!password.equalsIgnoreCase(foundWareHouse.getPassword())) throw new WareHouseRegistrationException("login failed  \uD83D\uDE48\uD83D\uDE48\uD83D\uDE49\uD83D\uDE49\uD83D\uDE4A\uD83D\uDE4A\n");
+
 
         return null;
     }

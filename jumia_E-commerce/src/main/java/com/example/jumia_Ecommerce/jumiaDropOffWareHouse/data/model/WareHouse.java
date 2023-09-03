@@ -1,9 +1,9 @@
 package com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.model;
 
 import com.example.jumia_Ecommerce.model.data.Address;
+import com.example.jumia_Ecommerce.model.data.AvailabilityState;
 import com.example.jumia_Ecommerce.product.data.model.Product;
 import jakarta.persistence.*;
-import jdk.jfr.DataAmount;
 import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,9 +32,9 @@ public class WareHouse {
     @Timestamp
     private LocalDateTime lastUpdated;
     private String password;
-
-
-    @OneToMany(mappedBy = "wareHouse", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
+    private AvailabilityState currentState;
+        @OneToMany(mappedBy = "wareHouse", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> listOfProducts = new ArrayList<>();
 
 }
