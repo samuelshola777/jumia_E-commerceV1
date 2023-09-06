@@ -10,7 +10,7 @@ public interface WareHouseService {
     WareHouseResponse registerNewWareHouse(WareHouseRequest wareHouseRequest1);
     WareHouseResponse updateWareHouse(UpdateWareHouseRequest updateWareHouseRequest);
     WareHouse findWareHouseByName(String wareHouseName);
-    void deleteWareHouseByName(String wareHouseName);
+   boolean deleteWareHouseByName(String wareHouseName);
     long countWareHouse();
 
     void deleteAllWareHouse();

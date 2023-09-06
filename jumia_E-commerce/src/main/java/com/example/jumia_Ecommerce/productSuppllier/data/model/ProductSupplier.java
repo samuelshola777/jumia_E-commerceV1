@@ -23,6 +23,8 @@ public class ProductSupplier  {
     private boolean enabled;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToOne(orphanRemoval = true)
+    private JumiaUser user;
     @OneToMany(mappedBy = "productSupplier", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private final List<Product> listOfProducts = new ArrayList<>();
 }

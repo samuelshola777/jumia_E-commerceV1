@@ -6,9 +6,11 @@ import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.response.WareHouseL
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.response.WareHouseResponse;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.model.WareHouse;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.repository.WareHouseRepository;
+import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.exception.WareHouseLoginException;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.exception.WareHouseRegistrationException;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.interfaces.WareHouseService;
 import com.example.jumia_Ecommerce.model.data.Address;
+import com.example.jumia_Ecommerce.product.service.interfaces.ProductService;
 import com.example.jumia_Ecommerce.service.interfaces.AddressService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class WareHouseServiceIMPL implements WareHouseService {
 
     private final WareHouseRepository wareHouseRepository;
     private final AddressService addressService;
+    private final ProductService productService;
 
     @Override
     public WareHouseResponse registerNewWareHouse(WareHouseRequest wareHouseRequest) {
@@ -73,9 +76,15 @@ public class WareHouseServiceIMPL implements WareHouseService {
     }
 
     @Override
-    public void deleteWareHouseByName(String wareHouseName) {
-        addressService.deleteAddressByStreetName(wareHouseName);
-    wareHouseRepository.delete(findWareHouseByName(wareHouseName));
+    public boolean deleteWareHouseByName(String wareHouseName) {
+        try {
+            WareHouse foundWareHouse = findWareHouseByName(wareHouseName);
+            wareHouseRepository.delete(foundWareHouse);
+            return true;
+        }catch (Exception e) {
+            System.out.println(e.getMessage()+" ");
+            return false;
+        }
     }
 
     @Override
@@ -91,10 +100,13 @@ public class WareHouseServiceIMPL implements WareHouseService {
     @Override
     public WareHouseLoginResponse loginToWareHouseDashBoard(String wareHouseName, String password) {
         WareHouse foundWareHouse = findWareHouseByName(wareHouseName);
-        if (!password.equalsIgnoreCase(foundWareHouse.getPassword())) throw new WareHouseRegistrationException("login failed  \uD83D\uDE48\uD83D\uDE48\uD83D\uDE49\uD83D\uDE49\uD83D\uDE4A\uD83D\uDE4A\n");
-
-
-        return null;
+        if (!foundWareHouse.getPassword().equals(password)) throw new WareHouseLoginException("Login Failed \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49");
+        foundWareHouse.setLoggedIn(true);
+        WareHouseLoginResponse wareHouseLoginResponse = new WareHouseLoginResponse();
+        wareHouseLoginResponse.addProductsToList(productService.getAllProductByWareHouseName(foundWareHouse.getWareHouseName()));
+        wareHouseLoginResponse.setLoggedIn(foundWareHouse.isLoggedIn());
+        wareHouseRepository.save(foundWareHouse);
+        return  wareHouseLoginResponse;
     }
 
 }
