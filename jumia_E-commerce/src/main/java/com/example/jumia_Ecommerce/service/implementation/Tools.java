@@ -1,9 +1,11 @@
 package com.example.jumia_Ecommerce.service.implementation;
 
 import com.example.jumia_Ecommerce.exception.ValidationException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Tools {
-    public static String passwordValidate(String password) {
+    public  String passwordValidate(String password) {
         int number = 0;
         for (int i = 0; i < password.length(); i++) {
             if (Character.isDigit(password.charAt(i))) {

@@ -1,7 +1,9 @@
-package com.example.jumia_Ecommerce.model.data;
+package com.example.jumia_Ecommerce.jumiaUser.data.model;
 
+import com.example.jumia_Ecommerce.model.data.Address;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class JumiaUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
