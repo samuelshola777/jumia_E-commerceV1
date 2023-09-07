@@ -1,5 +1,6 @@
 package com.example.jumia_Ecommerce.jumiaUser.service.implementation;
 
+import com.example.jumia_Ecommerce.exception.RegistrationException;
 import com.example.jumia_Ecommerce.jumiaUser.DTO.request.JumiaUserRequest;
 import com.example.jumia_Ecommerce.jumiaUser.data.model.JumiaUser;
 import com.example.jumia_Ecommerce.jumiaUser.data.repository.JumiaUserRepository;
@@ -21,7 +22,7 @@ public class JumiaUserServiceIMPL implements JumiaUserService {
     @Override
     public JumiaUser registerNewJumiaUser(JumiaUserRequest jumiaUserRequest) {
         tools.passwordValidate(jumiaUserRequest.getPassword());
-        if (jumiaUserRepository.existsByEmailAddress(jumiaUserRequest.getEmailAddress())) throw new Reg
+        if (jumiaUserRepository.existsByEmailAddress(jumiaUserRequest.getEmailAddress())) throw new RegistrationException("email address  " + jumiaUserRequest.getEmailAddress()+"  already exists");
         JumiaUser builderJumiaUser = mapToJumiaUser(jumiaUserRequest);
 
         return null;
