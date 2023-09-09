@@ -22,7 +22,9 @@ public class JumiaUserServiceIMPL implements JumiaUserService {
     @Override
     public JumiaUser registerNewJumiaUser(JumiaUserRequest jumiaUserRequest) {
         tools.passwordValidate(jumiaUserRequest.getPassword());
-        if (jumiaUserRepository.existsByEmailAddress(jumiaUserRequest.getEmailAddress())) throw new RegistrationException("email address  " + jumiaUserRequest.getEmailAddress()+"  already exists");
+        if (jumiaUserRepository.existsByEmailAddress(jumiaUserRequest.getEmailAddress()))
+            throw new RegistrationException("email address  " + jumiaUserRequest.getEmailAddress()+"  already exists");
+
         JumiaUser builderJumiaUser = mapToJumiaUser(jumiaUserRequest);
 
         return null;
