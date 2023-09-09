@@ -24,6 +24,8 @@ public class JumiaUserServiceIMPL implements JumiaUserService {
         tools.passwordValidate(jumiaUserRequest.getPassword());
         if (jumiaUserRepository.existsByEmailAddress(jumiaUserRequest.getEmailAddress()))
             throw new RegistrationException("email address  " + jumiaUserRequest.getEmailAddress()+"  already exists");
+        if (jumiaUserRequest.getPhoneNumber().length() < 11 || jumiaUserRequest.getPhoneNumber().length() > 12 )
+            throw new RegistrationException("phone number " + jumiaUserRequest.getPhoneNumber()+" is invalid");
 
         JumiaUser builderJumiaUser = mapToJumiaUser(jumiaUserRequest);
 
