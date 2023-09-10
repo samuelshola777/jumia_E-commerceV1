@@ -18,7 +18,7 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
     private final JumiaUserService jumiaUserService;
     @Override
     public ProductSupplierResponse registerNewProductSupplier(ProductSupplierRequest productSupplierRequest1) {
- JumiaUser createdJumiaUser = jumiaUserService.registerNewJumiaUser(productSupplierRequest1);
+// JumiaUser createdJumiaUser = jumiaUserService.registerNewJumiaUser(productSupplierRequest1);
         return null;
     }
 
