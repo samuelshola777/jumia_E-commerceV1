@@ -12,12 +12,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class JumiaUserServiceIMPL implements JumiaUserService {
-    private final Tools tools;
     private final JumiaUserRepository jumiaUserRepository;
+    private final Tools tools;
+
 
     @Override
     public JumiaUser registerNewJumiaUser(JumiaUserRequest jumiaUserRequest) {
@@ -26,20 +29,23 @@ public class JumiaUserServiceIMPL implements JumiaUserService {
             throw new RegistrationException("email address  " + jumiaUserRequest.getEmailAddress()+"  already exists");
         if (jumiaUserRequest.getPhoneNumber().length() < 11 || jumiaUserRequest.getPhoneNumber().length() > 12 )
             throw new RegistrationException("phone number " + jumiaUserRequest.getPhoneNumber()+" is not  invalid");
-
-
         JumiaUser builderJumiaUser = mapToJumiaUser(jumiaUserRequest);
+        return jumiaUserRepository.save(builderJumiaUser);
+    }
 
+    @Override
+    public List<JumiaUser> findJumiaUserByUsername(String username) {
         return null;
     }
 
     public JumiaUser mapToJumiaUser(JumiaUserRequest jumiaUserRequest){
         return JumiaUser.builder()
+                .mobileNetwork(tools.networkProvider(jumiaUserRequest.getPhoneNumber()))
                 .userName(jumiaUserRequest.getUserName())
                 .emailAddress(jumiaUserRequest.getEmailAddress())
                 .phoneNumber(jumiaUserRequest.getPhoneNumber())
                 .password(jumiaUserRequest.getPassword())
-                .mobileNetwork(jumiaUserRequest.getMobileNetwork())
+                .mobileNetwork(tools.networkProvider(jumiaUserRequest.getPhoneNumber()))
                 .address(jumiaUserRequest.getAddress())
                 .build();
     }

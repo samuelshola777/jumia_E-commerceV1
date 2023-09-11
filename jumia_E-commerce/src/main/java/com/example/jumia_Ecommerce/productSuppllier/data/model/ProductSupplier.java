@@ -24,7 +24,7 @@ public class ProductSupplier  {
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToOne(orphanRemoval = true)
-    private JumiaUser user;
+    private JumiaUser jumiaUser;
     @OneToMany(mappedBy = "productSupplier", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private final List<Product> listOfProducts = new ArrayList<>();
 }

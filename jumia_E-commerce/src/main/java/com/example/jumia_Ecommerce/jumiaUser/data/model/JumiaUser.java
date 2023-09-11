@@ -17,6 +17,7 @@ public class JumiaUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(nullable = false, unique = true)
     private String userName;
     @Column(nullable = false, unique = true)
