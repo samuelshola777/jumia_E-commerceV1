@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface JumiaUserService {
     JumiaUser registerNewJumiaUser(JumiaUserRequest jumiaUserRequest);
-
+    boolean ifExistByEmail(String email);
+    boolean ifExistByUsername(String username);
     List<JumiaUser> findJumiaUserByUsername(String username);
 
 }

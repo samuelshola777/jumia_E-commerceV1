@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JumiaUserRepository extends JpaRepository<JumiaUser, Long> {
     boolean existsByEmailAddress(String emailAddress);
+
+    boolean existsByUserName(String username);
 }

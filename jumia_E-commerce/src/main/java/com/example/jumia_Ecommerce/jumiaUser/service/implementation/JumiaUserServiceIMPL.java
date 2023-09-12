@@ -34,6 +34,18 @@ public class JumiaUserServiceIMPL implements JumiaUserService {
     }
 
     @Override
+    public boolean ifExistByEmail(String email) {
+        if (jumiaUserRepository.existsByEmailAddress(email)) return true;
+        return false;
+    }
+
+    @Override
+    public boolean ifExistByUsername(String username) {
+        if (jumiaUserRepository.existsByUserName(username)) return true;
+        return false;
+    }
+
+    @Override
     public List<JumiaUser> findJumiaUserByUsername(String username) {
         return null;
     }

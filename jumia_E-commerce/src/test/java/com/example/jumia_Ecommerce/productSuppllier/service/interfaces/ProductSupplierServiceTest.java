@@ -3,6 +3,7 @@ package com.example.jumia_Ecommerce.productSuppllier.service.interfaces;
 import com.example.jumia_Ecommerce.model.data.Address;
 import com.example.jumia_Ecommerce.jumiaUser.data.model.JumiaUser;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.request.ProductSupplierRequest;
+import com.example.jumia_Ecommerce.productSuppllier.DTO.request.UpdateProductSupplierRequest;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,8 @@ class ProductSupplierServiceTest {
     private JumiaUser jumiaUser1;
     private JumiaUser jumiaUser2;
     private JumiaUser jumiaUser3;
-
+    private Address updateAddress;
+    private UpdateProductSupplierRequest supplierUpdateRequest;
     private ProductSupplierRequest productSupplierRequest1;
     private ProductSupplierRequest productSupplierRequest2;
     private ProductSupplierRequest productSupplierRequest3;
@@ -71,24 +73,37 @@ class ProductSupplierServiceTest {
         jumiaUser3.setPassword("blueboat123");
         jumiaUser3.setAddress(address3);
         jumiaUser3.setUserName("sambone");
-        jumiaUser3.setPhoneNumber("09062666877");
+        jumiaUser3.setPhoneNumber("09062666897");
         jumiaUser3.setPassword("1SHOLAIBRAHIMOH2@GMAIL.COM3");
         productSupplierRequest3 = new ProductSupplierRequest();
         productSupplierRequest3.setJumiaUser(jumiaUser3);
+
+        supplierUpdateRequest = new UpdateProductSupplierRequest();
+        updateAddress = new Address();
+        updateAddress.setLocationGovernmentName("iwaya");
+        updateAddress.setStreetName("more road");
+        supplierUpdateRequest.setProductSupplierUserName("sambone");
+        supplierUpdateRequest.setUserName("isreal");
+        supplierUpdateRequest.setAddress(updateAddress);
     }
 
     @Test
     void registerNewProductSupplier(){
         try{
-            // assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest1));
-            //   assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest2));
+             assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest1));
+               assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest2));
             assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest3));
-
         }catch(Exception e){
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>  "+e.getMessage());
         }
-
-
+    }
+    @Test
+    void updateProductSupplier(){
+        try{
+            assertEquals("isreal", productSupplierServiceService.updateProductSupplierDetails(supplierUpdateRequest).getUserName());
+        }catch (Exception a){
+            System.out.println(a.getMessage()+"   <<<<<<<");
+        }
     }
 
 

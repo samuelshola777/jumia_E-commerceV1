@@ -22,8 +22,8 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-//    @ManyToOne
-//    private Cart cart;
+    @ManyToOne
+    private Cart cart;
     @Column(nullable = false)
     private String productName;
     @Column(nullable = false)
@@ -32,9 +32,9 @@ public class Product {
     private LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
     private Categories category;
+    private String wareHouseName;
     private long quantity;
-    @Enumerated(EnumType.STRING)
-    private ProductState productState;
+
     @ManyToOne
     private ProductSupplier productSupplier;
     @ManyToOne

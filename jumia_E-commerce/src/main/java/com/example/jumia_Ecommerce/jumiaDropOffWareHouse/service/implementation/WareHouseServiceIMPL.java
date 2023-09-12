@@ -35,6 +35,7 @@ public class WareHouseServiceIMPL implements WareHouseService {
         Address savedAddress = addressService.savedAddress(wareHouseRequest.getWareHouesAddress());
         WareHouse newWareHouse = WareHouse.builder()
                 .wareHouesAddress(savedAddress)
+                .password(wareHouseRequest.getPassword())
                 .createAt(LocalDateTime.now())
                 .wareHouseName(wareHouseName)
                 .build();
