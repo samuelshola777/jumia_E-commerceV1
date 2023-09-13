@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RequiredArgsConstructor
 class ProductSupplierServiceTest {
-
     @Autowired
     private  ProductSupplierService productSupplierServiceService;
 
@@ -25,8 +24,9 @@ class ProductSupplierServiceTest {
     private JumiaUser jumiaUser1;
     private JumiaUser jumiaUser2;
     private JumiaUser jumiaUser3;
-    private Address updateAddress;
     private UpdateProductSupplierRequest supplierUpdateRequest;
+    private Address updateAddress;
+
     private ProductSupplierRequest productSupplierRequest1;
     private ProductSupplierRequest productSupplierRequest2;
     private ProductSupplierRequest productSupplierRequest3;
@@ -73,7 +73,7 @@ class ProductSupplierServiceTest {
         jumiaUser3.setPassword("blueboat123");
         jumiaUser3.setAddress(address3);
         jumiaUser3.setUserName("sambone");
-        jumiaUser3.setPhoneNumber("09062666897");
+        jumiaUser3.setPhoneNumber("09062066877");
         jumiaUser3.setPassword("1SHOLAIBRAHIMOH2@GMAIL.COM3");
         productSupplierRequest3 = new ProductSupplierRequest();
         productSupplierRequest3.setJumiaUser(jumiaUser3);
@@ -85,27 +85,52 @@ class ProductSupplierServiceTest {
         supplierUpdateRequest.setProductSupplierUserName("sambone");
         supplierUpdateRequest.setUserName("isreal");
         supplierUpdateRequest.setAddress(updateAddress);
+
     }
 
     @Test
     void registerNewProductSupplier(){
         try{
-             assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest1));
-               assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest2));
+            assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest1));
+           assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest2));
             assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest3));
+
         }catch(Exception e){
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>  "+e.getMessage());
         }
     }
+
     @Test
     void updateProductSupplier(){
         try{
             assertEquals("isreal", productSupplierServiceService.updateProductSupplierDetails(supplierUpdateRequest).getUserName());
+
         }catch (Exception a){
             System.out.println(a.getMessage()+"   <<<<<<<");
         }
     }
 
+    @Test
+    void deleteProductSupplier(){
+        assertEquals("deleted successfully \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49", productSupplierServiceService.deleteProductSupplierByName("sambone"));
+        assertEquals("deleted successfully \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49", productSupplierServiceService.deleteProductSupplierByName("boneshaker"));
+        assertEquals("deleted successfully \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49", productSupplierServiceService.deleteProductSupplierByName("samuel shola"));
+        assertNull(productSupplierServiceService.findProductSupplierByUserName("samuel shola"));
+        assertNull(productSupplierServiceService.findProductSupplierByEmailAddress("samuelshola14@gmail.com"));
+        assertNull(productSupplierServiceService.findProductSupplierByUserName("boneshaker"));
+        assertNull(productSupplierServiceService.findProductSupplierByEmailAddress("sholaibrahimoh@gmail.com"));
+        assertNull(productSupplierServiceService.findProductSupplierByUserName("sambone"));
+        assertNull(productSupplierServiceService.findProductSupplierByEmailAddress("boneshaker896@gmail.com"));
+    }
+    @Test
+    void reRegisterDeletedProductSupplier(){
+        assertNotNull(productSupplierServiceService.registerNewProductSupplier(productSupplierRequest3));
+
+    }
+    @Test
+    void deleteAllProductSupplier(){
+        productSupplierServiceService.deleteAllProductSupplier();
+    }
 
 
 }

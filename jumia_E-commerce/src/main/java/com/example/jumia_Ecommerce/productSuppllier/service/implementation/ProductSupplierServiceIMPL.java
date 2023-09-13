@@ -2,6 +2,7 @@ package com.example.jumia_Ecommerce.productSuppllier.service.implementation;
 
 import com.example.jumia_Ecommerce.jumiaUser.DTO.request.JumiaUserRequest;
 import com.example.jumia_Ecommerce.jumiaUser.data.model.JumiaUser;
+import com.example.jumia_Ecommerce.model.data.AvailabilityState;
 import com.example.jumia_Ecommerce.model.data.Role;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.request.ProductSupplierRequest;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.request.UpdateProductSupplierRequest;
@@ -25,13 +26,37 @@ import java.util.Objects;
 public class ProductSupplierServiceIMPL implements ProductSupplierService {
     private final JumiaUserService jumiaUserService;
     private final ProductSupplierRepository supplierRepository;
+    @Override
+    public ProductSupplierResponse registerNewProductSupplier(ProductSupplierRequest productSupplierRequest1) {
+        ProductSupplier foundProductSupplier = supplierRepository.findByJumiaUserEmailAddress(productSupplierRequest1.getJumiaUser().getEmailAddress());
+        if (foundProductSupplier != null ){
+            if (foundProductSupplier.getState() == AvailabilityState.DELETED || foundProductSupplier.getState() == AvailabilityState.DEACTIVATED){
+                return     mapToProductSupplierResponse(supplierRepository.save(reRegisterDeletedSupplier(foundProductSupplier, productSupplierRequest1)));
+            }
+        }
+        JumiaUser registeredJumiaUser = jumiaUserService.registerNewJumiaUser(mapRequestToJumiaUserRequest(productSupplierRequest1));
+        ProductSupplier builtProductSupplier = ProductSupplier.builder()
+                .role(Role.SUPPLIER)
+                .state(AvailabilityState.PENDING)
+                .jumiaUser( registeredJumiaUser)
+                .build();
+        return mapToProductSupplierResponse(supplierRepository.save(builtProductSupplier));
+    }
 
     @Override
     public ProductSupplier findProductSupplierByUserName(String username) {
-        ProductSupplier foundProductSupplier = supplierRepository.findByJumiaUserUserName(username);
-        if (foundProductSupplier == null)
-            throw new ProductSupplierException("could'nt find supplier with the name >> "
-                    +username+" \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49");
+        ProductSupplier foundProductSupplier = null;
+        try{
+            foundProductSupplier  = supplierRepository.findByJumiaUserUserName(username);
+            if (foundProductSupplier == null)
+                throw new ProductSupplierException("could'nt find supplier with the name >> "
+                        +username+" \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        assert foundProductSupplier != null;
+        if (foundProductSupplier.getState() == AvailabilityState.DEACTIVATED ||
+                foundProductSupplier.getState() == AvailabilityState.DELETED) return null;
         return foundProductSupplier;
     }
 
@@ -41,6 +66,8 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
         if (foundProductSupplier == null)
             throw new ProductSupplierException("could'nt find supplier with the name >>> "
                     +emailAddress+" \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49");
+        if (foundProductSupplier.getState() == AvailabilityState.DEACTIVATED ||
+                foundProductSupplier.getState() == AvailabilityState.DELETED) return null;
         return foundProductSupplier;
     }
 
@@ -67,21 +94,25 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
     }
 
     @Override
-    public ProductSupplierResponse registerNewProductSupplier(ProductSupplierRequest productSupplierRequest1) {
-        JumiaUser registeredJumiaUser = jumiaUserService.registerNewJumiaUser(mapRequestToJumiaUserRequest(productSupplierRequest1));
-        ProductSupplier builtProductSupplier = ProductSupplier.builder()
-                .role(Role.SUPPLIER)
-                .jumiaUser( registeredJumiaUser)
-                .build();
-        return mapToProductSupplierResponse(supplierRepository.save(builtProductSupplier));
+    public String deleteProductSupplierByName(String username) {
+        ProductSupplier foundProductSupplier = supplierRepository.findByJumiaUserUserName(username);
+        foundProductSupplier.setState(AvailabilityState.DELETED);
+        supplierRepository.save(foundProductSupplier);
+        return "deleted successfully \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49";
     }
-    public JumiaUser mapProductSupplierToJumiaUser(ProductSupplierRequest productSupplierRequest){
-        return JumiaUser.builder()
+
+    @Override
+    public String deleteAllProductSupplier() {
+        supplierRepository.deleteAll();
+        return "deleted successfully \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49";
+    }
+
+    public JumiaUserRequest mapRequestToJumiaUserRequest(ProductSupplierRequest productSupplierRequest){
+        return JumiaUserRequest.builder()
                 .userName(productSupplierRequest.getJumiaUser().getUserName())
                 .password(productSupplierRequest.getJumiaUser().getPassword())
                 .emailAddress(productSupplierRequest.getJumiaUser().getEmailAddress())
                 .address(productSupplierRequest.getJumiaUser().getAddress())
-                .mobileNetwork(productSupplierRequest.getJumiaUser().getMobileNetwork())
                 .phoneNumber(productSupplierRequest.getJumiaUser().getPhoneNumber())
                 .build();
     }
@@ -91,16 +122,34 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
                 .phoneNumber(productSupplier.getJumiaUser().getPhoneNumber())
                 .userName(productSupplier.getJumiaUser().getUserName())
                 .build();
-
     }
-    public JumiaUserRequest mapRequestToJumiaUserRequest(ProductSupplierRequest productSupplierRequest){
-        return JumiaUserRequest.builder()
-                .userName(productSupplierRequest.getJumiaUser().getUserName())
-                .password(productSupplierRequest.getJumiaUser().getPassword())
-                .emailAddress(productSupplierRequest.getJumiaUser().getEmailAddress())
-                .address(productSupplierRequest.getJumiaUser().getAddress())
-                .phoneNumber(productSupplierRequest.getJumiaUser().getPhoneNumber())
-                .build();
+    private ProductSupplier reRegisterDeletedSupplier(ProductSupplier productSupplier,ProductSupplierRequest updateRequest){
+        if (updateRequest.getJumiaUser().getPassword() != null)
+            productSupplier.getJumiaUser().setPassword
+                    (updateRequest.getJumiaUser().getPassword());
+        if (updateRequest.getJumiaUser().getEmailAddress() != null)
+            productSupplier.getJumiaUser().setEmailAddress
+                    (updateRequest.getJumiaUser().getEmailAddress());
+        if (updateRequest.getJumiaUser().getPhoneNumber() != null)
+            productSupplier.getJumiaUser().setPhoneNumber
+                    (updateRequest.getJumiaUser().getPhoneNumber());
+        if (updateRequest.getJumiaUser().getUserName() != null)
+            productSupplier.getJumiaUser().setUserName
+                    (updateRequest.getJumiaUser().getUserName());
+        if (updateRequest.getJumiaUser().getAddress().getStreetName() != null)
+            productSupplier.getJumiaUser().getAddress().setStreetName
+                    (updateRequest.getJumiaUser().getAddress().getStreetName());
+        if (updateRequest.getJumiaUser().getAddress().getState() != null)
+            productSupplier.getJumiaUser().getAddress().setState
+                    (updateRequest.getJumiaUser().getAddress().getState());
+        if (updateRequest.getJumiaUser().getAddress().getBuildingNumber() != null)
+            productSupplier.getJumiaUser().getAddress().setBuildingNumber
+                    (updateRequest.getJumiaUser().getAddress().getBuildingNumber());
+        if (updateRequest.getJumiaUser().getAddress().getLocationGovernmentName() != null)
+            productSupplier.getJumiaUser().getAddress().setLocationGovernmentName
+                    (updateRequest.getJumiaUser().getAddress().getLocationGovernmentName());
+        productSupplier.setState(AvailabilityState.PENDING);
+        return productSupplier;
     }
     private ProductSupplier updateFillUpSupplier(ProductSupplier productSupplier,UpdateProductSupplierRequest updateRequest){
         if (updateRequest.getPassword() != null)
@@ -129,6 +178,4 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
                     (updateRequest.getAddress().getLocationGovernmentName());
         return productSupplier;
     }
-
-
 }

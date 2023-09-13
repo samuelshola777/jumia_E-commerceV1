@@ -7,8 +7,11 @@ import com.example.jumia_Ecommerce.productSuppllier.DTO.response.ProductSupplier
 import com.example.jumia_Ecommerce.productSuppllier.data.model.ProductSupplier;
 
 public interface ProductSupplierService {
+    ProductSupplierResponse registerNewProductSupplier(ProductSupplierRequest productSupplierRequest1);
     ProductSupplier findProductSupplierByUserName(String username);
     ProductSupplier findProductSupplierByEmailAddress(String emailAddress);
     ProductSupplierResponse updateProductSupplierDetails(UpdateProductSupplierRequest supplierUpdateRequest);
-    ProductSupplierResponse registerNewProductSupplier(ProductSupplierRequest productSupplierRequest1);
+    String deleteProductSupplierByName(String username);
+
+    String deleteAllProductSupplier();
 }
