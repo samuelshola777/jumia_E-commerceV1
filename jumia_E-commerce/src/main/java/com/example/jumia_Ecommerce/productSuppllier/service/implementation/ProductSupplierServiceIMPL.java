@@ -1,9 +1,15 @@
 package com.example.jumia_Ecommerce.productSuppllier.service.implementation;
 
+import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.model.WareHouse;
+import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.interfaces.WareHouseService;
 import com.example.jumia_Ecommerce.jumiaUser.DTO.request.JumiaUserRequest;
 import com.example.jumia_Ecommerce.jumiaUser.data.model.JumiaUser;
 import com.example.jumia_Ecommerce.model.data.AvailabilityState;
 import com.example.jumia_Ecommerce.model.data.Role;
+import com.example.jumia_Ecommerce.product.DTO.request.ProductRequest;
+import com.example.jumia_Ecommerce.product.DTO.response.ProductResponse;
+import com.example.jumia_Ecommerce.product.data.model.Product;
+import com.example.jumia_Ecommerce.product.service.interfaces.ProductService;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.request.ProductSupplierRequest;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.request.UpdateProductSupplierRequest;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.response.ProductSupplierResponse;
@@ -17,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
@@ -26,6 +33,8 @@ import java.util.Objects;
 public class ProductSupplierServiceIMPL implements ProductSupplierService {
     private final JumiaUserService jumiaUserService;
     private final ProductSupplierRepository supplierRepository;
+    private final ProductService productService;
+    private final WareHouseService warehouseService;
     @Override
     public ProductSupplierResponse registerNewProductSupplier(ProductSupplierRequest productSupplierRequest1) {
         ProductSupplier foundProductSupplier = supplierRepository.findByJumiaUserEmailAddress(productSupplierRequest1.getJumiaUser().getEmailAddress());
@@ -105,6 +114,50 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
     public String deleteAllProductSupplier() {
         supplierRepository.deleteAll();
         return "deleted successfully \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49";
+    }
+
+    @Override
+    public ProductResponse supplyNewProduct(ProductRequest productRequest3) {
+        Product foundProduct = productService.findProductByProductName(productRequest3.getProductName());
+        if (foundProduct.getProductName().equals(productRequest3.getProductName())
+                && Objects.equals(foundProduct.getProductPrice(), productRequest3.getProductPrice())
+                && foundProduct.getProductSupplierName().equals(productRequest3.getProductSupplierName())
+                && foundProduct.getWareHouseName().equals(productRequest3.getWareHouseName())){
+            foundProduct.setQuantity(foundProduct.getQuantity()+productRequest3.getQuantity());
+            foundProduct.setUpdatedAt(LocalDateTime.now());
+            boolean goat=false;
+            if (goat){
+                productService.saveProduct(foundProduct);
+            }
+
+            return ProductResponse.builder()
+                    .productPrice(foundProduct.getProductPrice())
+                    .productName(foundProduct.getProductName())
+                    .createdAt(foundProduct.getCreatedAt())
+                    .quantity(foundProduct.getQuantity())
+                    .category(foundProduct.getCategory()).build();
+        }
+        ProductSupplier foundSupplier = findProductSupplierByUserName(productRequest3.getProductSupplierName());
+        WareHouse foundWareHouse = warehouseService.findWareHouseByName(productRequest3.getWareHouseName());
+        Product newProduct = Product.builder()
+                .productName(productRequest3.getProductName())
+                .productPrice(productRequest3.getProductPrice())
+                .productSupplierName(productRequest3.getProductName())
+                .quantity(productRequest3.getQuantity())
+                .wareHouseName(productRequest3.getWareHouseName())
+                .category(productRequest3.getCategory())
+                .wareHouse(foundWareHouse)
+                .productSupplier(foundSupplier)
+                .createdAt(LocalDateTime.now())
+                .build();
+        productService.saveProduct(newProduct);
+        return ProductResponse.builder()
+                .productPrice(newProduct.getProductPrice())
+                .productName(newProduct.getProductName())
+                .createdAt(newProduct.getCreatedAt())
+                .category(newProduct.getCategory())
+                .quantity(newProduct.getQuantity())
+                .build();
     }
 
     public JumiaUserRequest mapRequestToJumiaUserRequest(ProductSupplierRequest productSupplierRequest){

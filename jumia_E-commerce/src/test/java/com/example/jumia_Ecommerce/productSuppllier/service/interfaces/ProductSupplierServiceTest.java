@@ -167,5 +167,15 @@ class ProductSupplierServiceTest {
         productSupplierServiceService.deleteAllProductSupplier();
     }
 
+    @Test
+    void testThatProductSupplierCanSupplyProductsToWareHouse(){
 
+        assertDoesNotThrow(()-> {
+            productSupplierServiceService.supplyNewProduct(productRequest3);
+            productSupplierServiceService.supplyNewProduct(productRequest2);
+            productSupplierServiceService.supplyNewProduct(productRequest1);
+        });
+
+
+    }
 }

@@ -13,4 +13,5 @@ public class ProductSupplierResponse {
     private String mobileNetwork;
     private String userName;
     private String phoneNumber;
+    private String productSupplierName;
 }

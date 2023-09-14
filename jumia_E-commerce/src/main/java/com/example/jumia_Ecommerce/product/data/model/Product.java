@@ -34,6 +34,7 @@ public class Product {
     private Categories category;
     private String wareHouseName;
     private long quantity;
+    private String productSupplierName;
 
     @ManyToOne
     private ProductSupplier productSupplier;

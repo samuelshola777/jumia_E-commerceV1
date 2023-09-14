@@ -7,4 +7,5 @@ public interface ProductSupplierRepository extends JpaRepository<ProductSupplier
     ProductSupplier findByJumiaUserUserName(String username);
 
     ProductSupplier findByJumiaUserEmailAddress(String emailAddress);
+
 }

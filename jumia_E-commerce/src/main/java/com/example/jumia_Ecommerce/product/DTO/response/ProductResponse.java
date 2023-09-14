@@ -19,4 +19,5 @@ public class ProductResponse {
     private LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
     private Categories category;
+    private long quantity;
 }
