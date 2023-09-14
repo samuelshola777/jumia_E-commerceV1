@@ -2,6 +2,8 @@ package com.example.jumia_Ecommerce.productSuppllier.service.interfaces;
 
 import com.example.jumia_Ecommerce.model.data.Address;
 import com.example.jumia_Ecommerce.jumiaUser.data.model.JumiaUser;
+import com.example.jumia_Ecommerce.model.data.Categories;
+import com.example.jumia_Ecommerce.product.DTO.request.ProductRequest;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.request.ProductSupplierRequest;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.request.UpdateProductSupplierRequest;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -30,6 +34,11 @@ class ProductSupplierServiceTest {
     private ProductSupplierRequest productSupplierRequest1;
     private ProductSupplierRequest productSupplierRequest2;
     private ProductSupplierRequest productSupplierRequest3;
+
+    private ProductRequest productRequest1;
+    private ProductRequest productRequest2;
+    private ProductRequest productRequest3;
+    private ProductRequest productRequest4;
 
 
     @BeforeEach
@@ -85,6 +94,32 @@ class ProductSupplierServiceTest {
         supplierUpdateRequest.setProductSupplierUserName("sambone");
         supplierUpdateRequest.setUserName("isreal");
         supplierUpdateRequest.setAddress(updateAddress);
+
+        productRequest1 = new ProductRequest();
+        productRequest1.setProductSupplierName("rephah");
+        productRequest1.setProductName("oraimo power bank");
+        productRequest1.setProductPrice(BigDecimal.valueOf(2000));
+        productRequest1.setCategory(Categories.COMPUTER);
+        productRequest1.setQuantity(50);
+        productRequest1.setWareHouseName("oshodi");
+
+
+        productRequest2 = new ProductRequest();
+        productRequest2.setProductSupplierName("isreal");
+        productRequest2.setProductName("nike cap");
+        productRequest2.setProductPrice(BigDecimal.valueOf(3000));
+        productRequest2.setQuantity(1600);
+        productRequest2.setProductName("oyingbo");
+        productRequest2.setCategory(Categories.FASHION);
+
+
+        productRequest3 = new ProductRequest();
+        productRequest3.setCategory(Categories.SPORT);
+        productRequest3.setProductSupplierName("sport bycikle");
+        productRequest3.setProductPrice(BigDecimal.valueOf(93000));
+        productRequest3.setQuantity(70);
+        productRequest3.setProductSupplierName("sambone");
+        productRequest3.setWareHouseName("oyingbo");
 
     }
 
