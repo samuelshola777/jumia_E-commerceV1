@@ -1,7 +1,6 @@
 package com.example.jumia_Ecommerce.product.DTO.response;
 
-import com.example.jumia_Ecommerce.model.data.Categories;
-import jakarta.persistence.Column;
+import com.example.jumia_Ecommerce.generalEnums.Product_Categories;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -18,6 +17,6 @@ public class ProductResponse {
     private BigDecimal productPrice;
     private LocalDateTime createdAt;
     @Enumerated(EnumType.STRING)
-    private Categories category;
+    private Product_Categories category;
     private long quantity;
 }

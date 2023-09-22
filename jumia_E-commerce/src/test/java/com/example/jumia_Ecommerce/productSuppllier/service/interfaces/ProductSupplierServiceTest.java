@@ -2,7 +2,7 @@ package com.example.jumia_Ecommerce.productSuppllier.service.interfaces;
 
 import com.example.jumia_Ecommerce.model.data.Address;
 import com.example.jumia_Ecommerce.jumiaUser.data.model.JumiaUser;
-import com.example.jumia_Ecommerce.model.data.Categories;
+import com.example.jumia_Ecommerce.generalEnums.Product_Categories;
 import com.example.jumia_Ecommerce.product.DTO.request.ProductRequest;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.request.ProductSupplierRequest;
 import com.example.jumia_Ecommerce.productSuppllier.DTO.request.UpdateProductSupplierRequest;
@@ -99,7 +99,7 @@ class ProductSupplierServiceTest {
         productRequest1.setProductSupplierName("rephah");
         productRequest1.setProductName("oraimo power bank");
         productRequest1.setProductPrice(BigDecimal.valueOf(2000));
-        productRequest1.setCategory(Categories.COMPUTER);
+        productRequest1.setCategory(Product_Categories.COMPUTER);
         productRequest1.setQuantity(50);
         productRequest1.setWareHouseName("oshodi");
 
@@ -110,11 +110,11 @@ class ProductSupplierServiceTest {
         productRequest2.setProductPrice(BigDecimal.valueOf(3000));
         productRequest2.setQuantity(1600);
         productRequest2.setProductName("oyingbo");
-        productRequest2.setCategory(Categories.FASHION);
+        productRequest2.setCategory(Product_Categories.FASHION);
 
 
         productRequest3 = new ProductRequest();
-        productRequest3.setCategory(Categories.SPORT);
+        productRequest3.setCategory(Product_Categories.SPORT);
         productRequest3.setProductSupplierName("sport bycikle");
         productRequest3.setProductPrice(BigDecimal.valueOf(93000));
         productRequest3.setQuantity(70);

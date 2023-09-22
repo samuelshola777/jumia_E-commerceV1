@@ -2,7 +2,7 @@ package com.example.jumia_Ecommerce.customer.data.model;
 
 import com.example.jumia_Ecommerce.cart.data.model.Cart;
 import com.example.jumia_Ecommerce.jumiaUser.data.model.JumiaUser;
-import com.example.jumia_Ecommerce.model.data.Role;
+import com.example.jumia_Ecommerce.generalEnums.Role;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,7 +1,7 @@
 package com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.model;
 
 import com.example.jumia_Ecommerce.model.data.Address;
-import com.example.jumia_Ecommerce.model.data.AvailabilityState;
+import com.example.jumia_Ecommerce.generalEnums.AvailabilityState;
 import com.example.jumia_Ecommerce.product.data.model.Product;
 import jakarta.persistence.*;
 import jdk.jfr.Timestamp;

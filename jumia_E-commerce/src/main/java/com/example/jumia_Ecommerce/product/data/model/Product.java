@@ -2,7 +2,7 @@ package com.example.jumia_Ecommerce.product.data.model;
 
 import com.example.jumia_Ecommerce.cart.data.model.Cart;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.model.WareHouse;
-import com.example.jumia_Ecommerce.model.data.Categories;
+import com.example.jumia_Ecommerce.generalEnums.Product_Categories;
 import com.example.jumia_Ecommerce.productSuppllier.data.model.ProductSupplier;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,7 +31,7 @@ public class Product {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     @Enumerated(EnumType.STRING)
-    private Categories category;
+    private Product_Categories category;
     private String wareHouseName;
     private long quantity;
     private String productSupplierName;

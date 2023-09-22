@@ -94,8 +94,9 @@ public class WareHouseServiceIMPL implements WareHouseService {
     }
 
     @Override
-    public void deleteAllWareHouse() {
+    public boolean deleteAllWareHouse() {
         wareHouseRepository.deleteAll();
+        return true;
     }
 
     @Override

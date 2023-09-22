@@ -13,7 +13,7 @@ public interface WareHouseService {
    boolean deleteWareHouseByName(String wareHouseName);
     long countWareHouse();
 
-    void deleteAllWareHouse();
+    boolean deleteAllWareHouse();
 
      WareHouseLoginResponse loginToWareHouseDashBoard(String wareHouseName, String password);
 }

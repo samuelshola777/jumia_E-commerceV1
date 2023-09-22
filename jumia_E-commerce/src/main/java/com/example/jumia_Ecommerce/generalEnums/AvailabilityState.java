@@ -1,4 +1,4 @@
-package com.example.jumia_Ecommerce.model.data;
+package com.example.jumia_Ecommerce.generalEnums;
 
 public enum AvailabilityState {
     ACTIVE, DEACTIVATED, DELETED,PENDING

@@ -7,4 +7,8 @@ public interface JumiaUserRepository extends JpaRepository<JumiaUser, Long> {
     boolean existsByEmailAddress(String emailAddress);
 
     boolean existsByUserName(String username);
+
+    JumiaUser findJumiaUserByUserName(String username);
+
+    JumiaUser findByEmailAddress(String jumiaUserEmailAddress);
 }

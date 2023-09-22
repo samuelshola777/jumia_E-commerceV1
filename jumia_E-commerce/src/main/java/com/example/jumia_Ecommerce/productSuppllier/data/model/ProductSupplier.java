@@ -1,8 +1,8 @@
 package com.example.jumia_Ecommerce.productSuppllier.data.model;
 
 import com.example.jumia_Ecommerce.jumiaUser.data.model.JumiaUser;
-import com.example.jumia_Ecommerce.model.data.AvailabilityState;
-import com.example.jumia_Ecommerce.model.data.Role;
+import com.example.jumia_Ecommerce.generalEnums.AvailabilityState;
+import com.example.jumia_Ecommerce.generalEnums.Role;
 import com.example.jumia_Ecommerce.product.data.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
