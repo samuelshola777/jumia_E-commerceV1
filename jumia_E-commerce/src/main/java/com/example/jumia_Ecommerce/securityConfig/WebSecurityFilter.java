@@ -11,12 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
 public class WebSecurityFilter {
     private final AuthenticationProvider authenticationProvider;
+    private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -24,7 +26,13 @@ public class WebSecurityFilter {
                 .authorizeHttpRequests(locked -> locked.requestMatchers(NonAccessAbleEndpoints.blackLabelEndPoints()).authenticated())
                 .authorizeHttpRequests(open -> open.requestMatchers(AccessAbleEndPoints.whiteLabelEndPoints()).permitAll())
                 .sessionManagement(sess-> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
+//    @Bean
+//    public JWTAuthenticationFilter authenticationFilter(){
+//        return new JWTAuthenticationFilter();
+//    }
 
 }

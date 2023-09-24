@@ -71,4 +71,8 @@ return extractClaim(token, Claims::getExpiration);
         byte[] KeyBytes = Decoders.BASE64.decode(JWT_SECRET_KEY);
             return Keys.hmacShaKeyFor(KeyBytes);
     }
+
+    public String extractUserName(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
 }
