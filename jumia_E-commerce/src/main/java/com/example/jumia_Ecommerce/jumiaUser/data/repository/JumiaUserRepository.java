@@ -11,4 +11,6 @@ public interface JumiaUserRepository extends JpaRepository<JumiaUser, Long> {
     JumiaUser findJumiaUserByUserName(String username);
 
     JumiaUser findByEmailAddress(String jumiaUserEmailAddress);
+
+    JumiaUser findJumiaUserByEmailAddress(String email);
 }

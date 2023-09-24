@@ -57,6 +57,13 @@ public class JumiaUserServiceIMPL implements JumiaUserService {
     }
 
     @Override
+    public JumiaUser findJumiaUserByEmail(String email) {
+        JumiaUser foundJumiaUser = jumiaUserRepository.findJumiaUserByEmailAddress(email);
+        if (foundJumiaUser == null) throw new RegistrationException("Could not find Jumia user by username  " +email);
+        return foundJumiaUser;
+    }
+
+    @Override
     public JumiaUser updateJumiaUser( UpdateJumiaUserRequest jumiaUserRequest) {
         JumiaUser foundUser = findJumiaUserByUsername(jumiaUserRequest.getJumiaUserUserName());
         if (foundUser != null) {

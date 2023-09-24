@@ -1,5 +1,6 @@
 package com.example.jumia_Ecommerce.jumiaUser.DTO.request;
 
+import com.example.jumia_Ecommerce.generalEnums.Role;
 import com.example.jumia_Ecommerce.model.data.Address;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,7 @@ public class JumiaUserRequest {
     private String emailAddress;
 
     private String mobileNetwork;
+    private Role role;
 
     private Address address;
 }

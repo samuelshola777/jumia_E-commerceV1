@@ -13,6 +13,7 @@ public interface JumiaUserService {
     boolean ifExistByEmail(String email);
     boolean ifExistByUsername(String username);
     JumiaUser findJumiaUserByUsername(String username);
+    JumiaUser findJumiaUserByEmail(String email);
 
     JumiaUser updateJumiaUser(UpdateJumiaUserRequest jumiaUserRequest);
 

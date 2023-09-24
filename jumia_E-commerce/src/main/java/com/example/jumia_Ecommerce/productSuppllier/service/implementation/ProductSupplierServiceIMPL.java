@@ -44,8 +44,8 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
             }
         }
         JumiaUser registeredJumiaUser = jumiaUserService.registerNewJumiaUser(mapRequestToJumiaUserRequest(productSupplierRequest1));
+       productSupplierRequest1.getJumiaUser().setRole(Role.PRODUCT_SUPPLIER);
         ProductSupplier builtProductSupplier = ProductSupplier.builder()
-                .role(Role.SUPPLIER)
                 .state(AvailabilityState.PENDING)
                 .jumiaUser( registeredJumiaUser)
                 .build();

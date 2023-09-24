@@ -1,5 +1,6 @@
 package com.example.jumia_Ecommerce.jumiaUser.data.model;
 
+import com.example.jumia_Ecommerce.generalEnums.Role;
 import com.example.jumia_Ecommerce.model.data.Address;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,8 @@ public class JumiaUser {
     private String phoneNumber;
     @Column(nullable = false, unique = true)
     private String emailAddress;
+    @Enumerated(EnumType.STRING)
+    private Role role ;
     private String mobileNetwork;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
