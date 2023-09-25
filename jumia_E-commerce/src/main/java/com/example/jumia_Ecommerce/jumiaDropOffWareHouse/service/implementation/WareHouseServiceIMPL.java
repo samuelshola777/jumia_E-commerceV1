@@ -74,7 +74,7 @@ public class WareHouseServiceIMPL implements WareHouseService {
     public WareHouse findWareHouseByName(String wareHouseName) {
         WareHouse foundWareHouse = wareHouseRepository.findByWareHouseName(wareHouseName);
         if (foundWareHouse == null)
-        throw new WareHouseRegistrationException("warehouse with name "+wareHouseName+" does not exist");
+        throw new WareHouseRegistrationException("warehouse with name >> "+wareHouseName+" << does not exist");
         return foundWareHouse;
     }
 

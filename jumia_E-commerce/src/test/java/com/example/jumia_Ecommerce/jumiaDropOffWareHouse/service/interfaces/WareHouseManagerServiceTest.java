@@ -6,13 +6,15 @@ import com.example.jumia_Ecommerce.model.data.Address;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-@RequiredArgsConstructor
+
 class WareHouseManagerServiceTest {
-    private final WareHouseManagerService wareHouseManagerService;
+    @Autowired
+    private  WareHouseManagerService wareHouseManagerService;
 
 
     private Address address1;
@@ -46,30 +48,36 @@ class WareHouseManagerServiceTest {
         address3.setLocationGovernmentName("ebute meta");
 
         wareHouseManager1 = new JumiaUserRequest();
-        wareHouseManager1.setPassword("goat1");
+        wareHouseManager1.setPassword("goat123");
         wareHouseManager1.setAddress(address1);
-        wareHouseManager1.setPhoneNumber("09099332737");
+        wareHouseManager1.setPhoneNumber("09019332737");
         wareHouseManager1.setUserName("flyAway1");
         wareHouseManager1.setEmailAddress("flyaway1@gmail.com");
 
         wareHouseManager2 = new JumiaUserRequest();
         wareHouseManager2.setEmailAddress("flyaway2@gmail.com");
-        wareHouseManager2.setPhoneNumber("09099332737");
+        wareHouseManager2.setPhoneNumber("09029332737");
         wareHouseManager2.setAddress(address2);
-        wareHouseManager2.setPassword("goat2");
+        wareHouseManager2.setPassword("goat1234");
         wareHouseManager2.setUserName("flyaway2");
 
+        wareHouseManager3 = new JumiaUserRequest();
         wareHouseManager3.setUserName("flyaway3");
-        wareHouseManager3.setPassword("goat3");
+        wareHouseManager3.setPassword("goat1235");
         wareHouseManager3.setAddress(address3);
-        wareHouseManager3.setPhoneNumber("09099332737");
+        wareHouseManager3.setPhoneNumber("09039332737");
         wareHouseManager3.setEmailAddress("flyaway3@gmail.com");
 
     }
 
     @Test
     void registerNewWareHouse() {
+        assertDoesNotThrow(()->{
 
+          wareHouseManagerService.registerNewWareHouse(wareHouseManager1, "yaba");
+           wareHouseManagerService.registerNewWareHouse(wareHouseManager2,"sango");
+            wareHouseManagerService.registerNewWareHouse(wareHouseManager3, "mongoMarry");
+        });
 
     }
 
