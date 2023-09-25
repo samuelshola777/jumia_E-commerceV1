@@ -14,6 +14,8 @@ import com.example.jumia_Ecommerce.service.implementation.Tools;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.List;
 public class JumiaUserServiceIMPL implements JumiaUserService {
     private final JumiaUserRepository jumiaUserRepository;
     private final Tools tools;
+  private final PasswordEncoder password;
 
 
     @Override
@@ -99,6 +102,7 @@ public class JumiaUserServiceIMPL implements JumiaUserService {
                 .emailAddress(jumiaUserRequest.getEmailAddress())
                 .phoneNumber(jumiaUserRequest.getPhoneNumber())
                 .password(jumiaUserRequest.getPassword())
+                .password(password.encode(jumiaUserRequest.getPassword()))
                 .mobileNetwork(tools.networkProvider(jumiaUserRequest.getPhoneNumber()))
                 .address(jumiaUserRequest.getAddress())
                 .build();

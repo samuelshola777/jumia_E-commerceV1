@@ -3,6 +3,7 @@ package com.example.jumia_Ecommerce.productSuppllier.data.model;
 import com.example.jumia_Ecommerce.jumiaUser.data.model.JumiaUser;
 import com.example.jumia_Ecommerce.generalEnums.AvailabilityState;
 import com.example.jumia_Ecommerce.generalEnums.Role;
+import com.example.jumia_Ecommerce.model.data.Address;
 import com.example.jumia_Ecommerce.product.data.model.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,4 +29,5 @@ public class ProductSupplier  {
     private final List<Product> listOfProducts = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private AvailabilityState state = AvailabilityState.PENDING;
+
 }

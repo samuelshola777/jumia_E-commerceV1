@@ -14,6 +14,7 @@ import com.example.jumia_Ecommerce.product.service.interfaces.ProductService;
 import com.example.jumia_Ecommerce.service.interfaces.AddressService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,6 +27,7 @@ public class WareHouseServiceIMPL implements WareHouseService {
     private final WareHouseRepository wareHouseRepository;
     private final AddressService addressService;
     private final ProductService productService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public WareHouseResponse registerNewWareHouse(WareHouseRequest wareHouseRequest) {
@@ -35,7 +37,7 @@ public class WareHouseServiceIMPL implements WareHouseService {
         Address savedAddress = addressService.savedAddress(wareHouseRequest.getWareHouesAddress());
         WareHouse newWareHouse = WareHouse.builder()
                 .wareHouesAddress(savedAddress)
-                .password(wareHouseRequest.getPassword())
+                .password(passwordEncoder.encode(wareHouseRequest.getPassword()))
                 .createAt(LocalDateTime.now())
                 .wareHouseName(wareHouseName)
                 .build();

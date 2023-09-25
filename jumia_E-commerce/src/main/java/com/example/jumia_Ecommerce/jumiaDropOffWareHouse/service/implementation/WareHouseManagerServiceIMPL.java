@@ -49,8 +49,7 @@ public class WareHouseManagerServiceIMPL implements WareHouseManagerService {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken( username,password));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateJWT(authentication);
-
-        return null;
+        return token;
     }
 
 

@@ -1,6 +1,8 @@
 package com.example.jumia_Ecommerce.securityConfig;
 
+import com.example.jumia_Ecommerce.jumiaUser.data.repository.JumiaUserRepository;
 import com.example.jumia_Ecommerce.jumiaUser.service.interfaces.JumiaUserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,12 +15,20 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Configuration
 @RequiredArgsConstructor
+@Transactional
+@Service
 public class SecurityBeans {
-    private final JumiaUserService jumiaUserService;
+    private final JumiaUserRepository jumiaUserService;
 
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+   return   new BCryptPasswordEncoder();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration  authenticationConfiguration) throws Exception {
@@ -26,7 +36,7 @@ public class SecurityBeans {
     }
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> (UserDetails) jumiaUserService.findJumiaUserByEmail(username);
+        return username -> (UserDetails) jumiaUserService.findJumiaUserByEmailAddress(username);
     }
 
     @Bean
@@ -36,9 +46,6 @@ public class SecurityBeans {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+
 
 }

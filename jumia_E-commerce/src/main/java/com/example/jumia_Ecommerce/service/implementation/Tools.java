@@ -1,12 +1,15 @@
 package com.example.jumia_Ecommerce.service.implementation;
 
 import com.example.jumia_Ecommerce.exception.ValidationException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class Tools {
 
-
+//private final PasswordEncoder passwordEncoder;
 
 
     public  String passwordValidate(String password) {
@@ -121,6 +124,10 @@ public class Tools {
         return false;
     }
 
+
+//    public String endCodePassword(String password) {
+//        return passwordEncoder.encode(password);
+//    }
 
 
 
