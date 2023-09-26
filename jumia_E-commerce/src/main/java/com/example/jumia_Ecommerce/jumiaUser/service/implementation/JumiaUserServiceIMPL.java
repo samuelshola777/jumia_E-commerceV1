@@ -101,6 +101,7 @@ public class JumiaUserServiceIMPL implements JumiaUserService {
                 .userName(jumiaUserRequest.getUserName())
                 .emailAddress(jumiaUserRequest.getEmailAddress())
                 .phoneNumber(jumiaUserRequest.getPhoneNumber())
+                .role(jumiaUserRequest.getRole())
                 .password(jumiaUserRequest.getPassword())
                 .password(password.encode(jumiaUserRequest.getPassword()))
                 .mobileNetwork(tools.networkProvider(jumiaUserRequest.getPhoneNumber()))

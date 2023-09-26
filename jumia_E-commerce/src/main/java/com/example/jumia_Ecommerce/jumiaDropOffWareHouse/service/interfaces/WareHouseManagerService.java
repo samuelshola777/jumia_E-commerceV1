@@ -6,4 +6,6 @@ public interface WareHouseManagerService {
     String registerNewWareHouse(JumiaUserRequest jumiaUserRequest, String wareHouseName);
 
     String loginAsWareHouseManager(String username, String password);
+
+    void deleteAllWareHouseManager();
 }

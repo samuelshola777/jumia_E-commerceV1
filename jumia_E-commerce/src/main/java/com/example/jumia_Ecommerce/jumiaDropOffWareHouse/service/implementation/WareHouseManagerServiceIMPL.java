@@ -3,12 +3,10 @@ package com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.implementation
 import com.example.jumia_Ecommerce.generalEnums.Role;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.model.WareHouseManager;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.repository.WareHouseManagerRepository;
-import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.repository.WareHouseRepository;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.interfaces.WareHouseManagerService;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.interfaces.WareHouseService;
 import com.example.jumia_Ecommerce.jumiaUser.DTO.request.JumiaUserRequest;
 import com.example.jumia_Ecommerce.jumiaUser.service.interfaces.JumiaUserService;
-import com.example.jumia_Ecommerce.securityConfig.JWTGenerator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +50,10 @@ public class WareHouseManagerServiceIMPL implements WareHouseManagerService {
         return token;
     }
 
+    @Override
+    public void deleteAllWareHouseManager() {
+        wareHouseManagerRepo.deleteAll();
+    }
 
 
 }

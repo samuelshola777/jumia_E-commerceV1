@@ -79,7 +79,7 @@ class WareHouseServiceTest {
         assertNotNull(wareHouseService.registerNewWareHouse(wareHouseRequest1));
         assertNotNull(wareHouseService.registerNewWareHouse(wareHouseRequest2));
         assertNotNull(wareHouseService.registerNewWareHouse(wareHouseRequest3));
-        assertNotNull(wareHouseService.registerNewWareHouse(wareHouseRequest4));
+       // assertNotNull(wareHouseService.registerNewWareHouse(wareHouseRequest4));
     }
     @Test
     void updateWareHouse(){

@@ -83,5 +83,12 @@ class WareHouseManagerServiceTest {
 
     @Test
     void loginAsWareHouseManager() {
+
+        assertEquals("ihwdjfiujeeijeff", wareHouseManagerService.loginAsWareHouseManager("flyaway3@gmail.com","goat1235"));
+    }
+
+    @Test
+    void deleteAllWareHouseManager(){
+        wareHouseManagerService.deleteAllWareHouseManager();
     }
 }

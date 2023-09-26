@@ -162,7 +162,7 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
 
     public JumiaUserRequest mapRequestToJumiaUserRequest(ProductSupplierRequest productSupplierRequest){
         return JumiaUserRequest.builder()
-                .userName(productSupplierRequest.getJumiaUser().getUserName())
+                .userName(productSupplierRequest.getJumiaUser().getUsername())
                 .password(productSupplierRequest.getJumiaUser().getPassword())
                 .emailAddress(productSupplierRequest.getJumiaUser().getEmailAddress())
                 .address(productSupplierRequest.getJumiaUser().getAddress())
@@ -173,7 +173,7 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
         return  ProductSupplierResponse.builder()
                 .mobileNetwork(productSupplier.getJumiaUser().getMobileNetwork())
                 .phoneNumber(productSupplier.getJumiaUser().getPhoneNumber())
-                .userName(productSupplier.getJumiaUser().getUserName())
+                .userName(productSupplier.getJumiaUser().getUsername())
                 .build();
     }
     private ProductSupplier reRegisterDeletedSupplier(ProductSupplier productSupplier,ProductSupplierRequest updateRequest){
@@ -186,9 +186,9 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
         if (updateRequest.getJumiaUser().getPhoneNumber() != null)
             productSupplier.getJumiaUser().setPhoneNumber
                     (updateRequest.getJumiaUser().getPhoneNumber());
-        if (updateRequest.getJumiaUser().getUserName() != null)
+        if (updateRequest.getJumiaUser().getUsername() != null)
             productSupplier.getJumiaUser().setUserName
-                    (updateRequest.getJumiaUser().getUserName());
+                    (updateRequest.getJumiaUser().getUsername());
         if (updateRequest.getJumiaUser().getAddress().getStreetName() != null)
             productSupplier.getJumiaUser().getAddress().setStreetName
                     (updateRequest.getJumiaUser().getAddress().getStreetName());
