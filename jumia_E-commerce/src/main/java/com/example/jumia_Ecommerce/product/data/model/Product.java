@@ -30,6 +30,7 @@ public class Product {
     private BigDecimal productPrice;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
     @Enumerated(EnumType.STRING)
     private Product_Categories category;
     private String wareHouseName;
