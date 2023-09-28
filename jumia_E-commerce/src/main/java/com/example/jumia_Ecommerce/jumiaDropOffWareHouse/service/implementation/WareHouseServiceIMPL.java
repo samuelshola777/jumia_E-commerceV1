@@ -14,6 +14,8 @@ import com.example.jumia_Ecommerce.product.service.interfaces.ProductService;
 import com.example.jumia_Ecommerce.service.interfaces.AddressService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,7 @@ public class WareHouseServiceIMPL implements WareHouseService {
     private final WareHouseRepository wareHouseRepository;
     private final AddressService addressService;
     private final ProductService productService;
+    private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -101,17 +104,17 @@ public class WareHouseServiceIMPL implements WareHouseService {
         return true;
     }
 
-    @Override
-    public WareHouseLoginResponse loginToWareHouseDashBoard(String wareHouseName, String password) {
-        WareHouse foundWareHouse = findWareHouseByName(wareHouseName);
-        if (!foundWareHouse.getPassword().equals(password)) throw new WareHouseLoginException("Login Failed \uD83D\uDC35\uD83D\uDE48\uD83D\uDE49");
-        foundWareHouse.setLoggedIn(true);
-        WareHouseLoginResponse wareHouseLoginResponse = new WareHouseLoginResponse();
-        wareHouseLoginResponse.addProductsToList(productService.getAllProductByWareHouseName(foundWareHouse.getWareHouseName()));
-        wareHouseLoginResponse.setLoggedIn(foundWareHouse.isLoggedIn());
-        wareHouseRepository.save(foundWareHouse);
-        return  wareHouseLoginResponse;
-    }
+//    @Override
+//    public WareHouseLoginResponse loginToWareHouseDashBoard(String wareHouseName, String password) {
+//        WareHouse foundWareHouse = findWareHouseByName(wareHouseName);
+//       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(wareHouseName, password));
+//        foundWareHouse.setLoggedIn(true);
+//        WareHouseLoginResponse wareHouseLoginResponse = new WareHouseLoginResponse();
+//        wareHouseLoginResponse.addProductsToList(productService.getAllProductByWareHouseName(foundWareHouse.getWareHouseName()));
+//        wareHouseLoginResponse.setLoggedIn(foundWareHouse.isLoggedIn());
+//        wareHouseRepository.save(foundWareHouse);
+//        return  wareHouseLoginResponse;
+//    }
 
 }
 

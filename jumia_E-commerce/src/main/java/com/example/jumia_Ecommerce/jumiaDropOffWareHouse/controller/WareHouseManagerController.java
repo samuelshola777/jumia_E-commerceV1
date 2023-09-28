@@ -17,5 +17,9 @@ public class WareHouseManagerController {
     public ResponseEntity<String> registerWareHouseManager(@RequestBody JumiaUserRequest jumiaUserRequest, @RequestParam String warehouseName){
         return new ResponseEntity<>(wareHouseManagerService.registerNewWareHouse(jumiaUserRequest, warehouseName), HttpStatus.ACCEPTED);
     }
+    @GetMapping("login")
+    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password){
+        return new ResponseEntity<>(wareHouseManagerService.loginAsWareHouseManager(email, password), HttpStatus.OK);
+    }
 
 }

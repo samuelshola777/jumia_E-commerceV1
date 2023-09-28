@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class WareHouseRequest {
     private Address wareHouesAddress;
-    private String wareHouseName;
+
     private String password;
 }

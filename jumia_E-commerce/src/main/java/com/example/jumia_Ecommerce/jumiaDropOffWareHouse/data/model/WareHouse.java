@@ -37,4 +37,6 @@ public class WareHouse {
         @OneToMany(mappedBy = "wareHouse", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> listOfProducts = new ArrayList<>();
 
+
+
 }
