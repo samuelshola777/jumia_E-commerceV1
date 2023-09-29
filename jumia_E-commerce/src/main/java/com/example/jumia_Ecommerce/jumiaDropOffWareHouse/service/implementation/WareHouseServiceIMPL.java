@@ -1,5 +1,6 @@
 package com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.implementation;
 
+import com.example.jumia_Ecommerce.generalEnums.Product_Categories;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.requests.UpdateWareHouseRequest;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.requests.WareHouseRequest;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.DTO.response.WareHouseLoginResponse;
@@ -10,6 +11,7 @@ import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.exception.WareHouseLogi
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.exception.WareHouseRegistrationException;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.interfaces.WareHouseService;
 import com.example.jumia_Ecommerce.model.data.Address;
+import com.example.jumia_Ecommerce.product.DTO.response.ProductResponse;
 import com.example.jumia_Ecommerce.product.service.interfaces.ProductService;
 import com.example.jumia_Ecommerce.service.interfaces.AddressService;
 import jakarta.transaction.Transactional;
@@ -19,7 +21,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -104,17 +109,19 @@ public class WareHouseServiceIMPL implements WareHouseService {
         return true;
     }
 
-//    @Override
-//    public WareHouseLoginResponse loginToWareHouseDashBoard(String wareHouseName, String password) {
-//        WareHouse foundWareHouse = findWareHouseByName(wareHouseName);
-//       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(wareHouseName, password));
-//        foundWareHouse.setLoggedIn(true);
-//        WareHouseLoginResponse wareHouseLoginResponse = new WareHouseLoginResponse();
-//        wareHouseLoginResponse.addProductsToList(productService.getAllProductByWareHouseName(foundWareHouse.getWareHouseName()));
-//        wareHouseLoginResponse.setLoggedIn(foundWareHouse.isLoggedIn());
-//        wareHouseRepository.save(foundWareHouse);
-//        return  wareHouseLoginResponse;
-//    }
+    @Override
+    public Product_Categories[] getAllCategory(String wareHouseManagerEmail, String wareHouseName) {
+        WareHouse foundWareHouse = findWareHouseByName(wareHouseName);
+        if (! foundWareHouse.getWareHouseManagerEmail().equalsIgnoreCase(wareHouseManagerEmail))
+            throw new WareHouseLoginException
+                    ("could not perform this operation due to the warehouseManager email does not match -> "+wareHouseManagerEmail);
+        return Product_Categories.values();
+    }
+
+    @Override
+    public void saveWareHouse(WareHouse foundWareHouse) {
+        wareHouseRepository.save(foundWareHouse);
+    }
 
 }
 

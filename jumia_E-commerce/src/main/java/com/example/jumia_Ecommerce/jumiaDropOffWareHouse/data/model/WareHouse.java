@@ -34,6 +34,7 @@ public class WareHouse {
     private String password;
     @Enumerated(EnumType.STRING)
     private AvailabilityState currentState;
+    private String wareHouseManagerEmail;
         @OneToMany(mappedBy = "wareHouse", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> listOfProducts = new ArrayList<>();
 

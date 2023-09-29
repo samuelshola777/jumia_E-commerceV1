@@ -37,7 +37,9 @@ public class JWTService {
                 .parseClaimsJws(token).getBody();
     }
     public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> claims = new HashMap<>();
+        userDetails.getAuthorities().forEach(claim -> claims.put("claim", claim));
+        return generateToken(claims, userDetails);
     }
 
     private Key getSignInKey() {

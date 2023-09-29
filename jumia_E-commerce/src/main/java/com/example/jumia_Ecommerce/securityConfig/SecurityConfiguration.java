@@ -25,7 +25,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
        httpSecurity.csrf(AbstractHttpConfigurer::disable)
        .authorizeHttpRequests(accessEndPoint -> accessEndPoint .requestMatchers(AccessAbleEndPoints.whiteLabelEndPoints()).permitAll())
-       .authorizeHttpRequests(nonAccessEndPoint -> nonAccessEndPoint .requestMatchers(NonAccessAbleEndpoints.blackLabelEndPoints()).authenticated())
+      // .authorizeHttpRequests(nonAccessEndPoint -> nonAccessEndPoint .requestMatchers(NonAccessAbleEndpoints.blackLabelEndPoints()).authenticated())
        .authorizeHttpRequests(anyRequest -> anyRequest.anyRequest().authenticated())
        .sessionManagement(sec -> sec.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
        .authenticationProvider(authenticationProvider )

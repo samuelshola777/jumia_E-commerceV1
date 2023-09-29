@@ -1,6 +1,7 @@
 package com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.implementation;
 
 import com.example.jumia_Ecommerce.generalEnums.Role;
+import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.model.WareHouse;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.model.WareHouseManager;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.data.repository.WareHouseManagerRepository;
 import com.example.jumia_Ecommerce.jumiaDropOffWareHouse.service.interfaces.WareHouseManagerService;
@@ -34,10 +35,13 @@ public class WareHouseManagerServiceIMPL implements WareHouseManagerService {
     @Override
     public String registerNewWareHouse(JumiaUserRequest jumiaUserRequest,  String wareHouseName) {
     jumiaUserRequest.setRole(Role.WARE_HOUSE_MANAGER);
+    WareHouse foundWareHouse = wareHouseService.findWareHouseByName(wareHouseName);
+    foundWareHouse.setWareHouseManagerEmail(jumiaUserRequest.getEmailAddress());
+    wareHouseService.saveWareHouse(foundWareHouse);
        JumiaUser createdJumiaUser = jumiaUserService.registerNewJumiaUser(jumiaUserRequest);
         wareHouseManagerRepo.save(
     WareHouseManager.builder()
-            .warehouse(wareHouseService.findWareHouseByName(wareHouseName))
+            .warehouse(foundWareHouse)
             .jumiaUser(createdJumiaUser)
             .wareHouseName(wareHouseName)
             .registrationDate(LocalDateTime.now())

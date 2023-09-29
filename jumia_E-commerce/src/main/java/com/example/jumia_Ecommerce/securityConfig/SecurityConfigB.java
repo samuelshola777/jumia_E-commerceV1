@@ -19,19 +19,19 @@ public class SecurityConfigB {
     private final JumiaUserRepository jumiaUserRepository;
    // private final PasswordEncoder passwordEncoder;
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-            return jumiaUserRepository::findJumiaUserByEmailAddress;
-
-    }
 //    @Bean
 //    public UserDetailsService userDetailsService() {
-//        try {
 //            return jumiaUserRepository::findJumiaUserByEmailAddress;
-//        }catch (Exception e) {
-//            throw new JumiaUserException("security couldn't find user  ->  "+e.getMessage());
-//        }
+//
 //    }
+    @Bean
+    public UserDetailsService userDetailsService() {
+        try {
+            return jumiaUserRepository::findJumiaUserByEmailAddress;
+        }catch (Exception e) {
+            throw new JumiaUserException("security couldn't find user  ->  "+e.getMessage());
+        }
+    }
 
 
     @Bean
@@ -41,19 +41,19 @@ public class SecurityConfigB {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-            return  authenticationConfiguration.getAuthenticationManager();
-
-    }
 //    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration){
-//        try{
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 //            return  authenticationConfiguration.getAuthenticationManager();
-//        }catch (Exception e){
-//            throw new JumiaUserException("security authentication manager couldn't perform authentication ->  "+e.getMessage());
-//        }
+//
 //    }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration){
+        try{
+            return  authenticationConfiguration.getAuthenticationManager();
+        }catch (Exception e){
+            throw new JumiaUserException("security authentication manager couldn't perform authentication ->  "+e.getMessage());
+        }
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
