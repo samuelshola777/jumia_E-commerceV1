@@ -18,4 +18,5 @@ public interface ProductSupplierService {
 
     ProductResponse supplyNewProduct(ProductRequest productRequest2);
 
+    ProductSupplierResponse loginAsProductSupplier(String mail, String blueboat123);
 }

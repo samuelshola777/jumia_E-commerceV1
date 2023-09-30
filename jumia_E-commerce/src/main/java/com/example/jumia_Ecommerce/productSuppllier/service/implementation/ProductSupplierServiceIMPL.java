@@ -18,9 +18,13 @@ import com.example.jumia_Ecommerce.productSuppllier.data.repository.ProductSuppl
 import com.example.jumia_Ecommerce.productSuppllier.exception.ProductSupplierException;
 import com.example.jumia_Ecommerce.productSuppllier.service.interfaces.ProductSupplierService;
 import com.example.jumia_Ecommerce.jumiaUser.service.interfaces.JumiaUserService;
+import com.example.jumia_Ecommerce.securityConfig.JWTService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,12 +39,15 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
     private final ProductSupplierRepository supplierRepository;
     private final ProductService productService;
     private final WareHouseService warehouseService;
+    private final AuthenticationManager authenticationManager;
+    private final JWTService jwtService;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public ProductSupplierResponse registerNewProductSupplier(ProductSupplierRequest productSupplierRequest1) {
         ProductSupplier foundProductSupplier = supplierRepository.findByJumiaUserEmailAddress(productSupplierRequest1.getJumiaUser().getEmailAddress());
         if (foundProductSupplier != null ){
             if (foundProductSupplier.getState() == AvailabilityState.DELETED || foundProductSupplier.getState() == AvailabilityState.DEACTIVATED){
-                return     mapToProductSupplierResponse(supplierRepository.save(reRegisterDeletedSupplier(foundProductSupplier, productSupplierRequest1)));
+                return   new ProductSupplierResponse(jwtService.generateToken(supplierRepository.save(reRegisterDeletedSupplier(foundProductSupplier, productSupplierRequest1)).getJumiaUser()));
             }
         }
         JumiaUser registeredJumiaUser = jumiaUserService.registerNewJumiaUser(mapRequestToJumiaUserRequest(productSupplierRequest1));
@@ -49,7 +56,7 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
                 .state(AvailabilityState.PENDING)
                 .jumiaUser( registeredJumiaUser)
                 .build();
-        return mapToProductSupplierResponse(supplierRepository.save(builtProductSupplier));
+        return   new ProductSupplierResponse(jwtService.generateToken(supplierRepository.save(reRegisterDeletedSupplier(foundProductSupplier, productSupplierRequest1)).getJumiaUser()));
     }
 
     @Override
@@ -99,7 +106,8 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
         }catch (Exception e){
             System.out.println(e.getMessage()+"  <<<<<<<<<<<<<<<");
         }
-        return mapToProductSupplierResponse(supplierRepository.save(Objects.requireNonNull(updateFillUpSupplier(foundSupplier, supplierUpdate))));
+        supplierRepository.save(Objects.requireNonNull(updateFillUpSupplier(foundSupplier, supplierUpdate)));
+        return new ProductSupplierResponse("update completed");
     }
 
     @Override
@@ -160,6 +168,12 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
                 .build();
     }
 
+    @Override
+    public ProductSupplierResponse loginAsProductSupplier(String mail, String password) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(mail, password));
+        return new ProductSupplierResponse(jwtService.generateToken(findProductSupplierByEmailAddress(mail).getJumiaUser()));
+    }
+
     public JumiaUserRequest mapRequestToJumiaUserRequest(ProductSupplierRequest productSupplierRequest){
         return JumiaUserRequest.builder()
                 .userName(productSupplierRequest.getJumiaUser().getUsername())
@@ -169,17 +183,11 @@ public class ProductSupplierServiceIMPL implements ProductSupplierService {
                 .phoneNumber(productSupplierRequest.getJumiaUser().getPhoneNumber())
                 .build();
     }
-    public ProductSupplierResponse mapToProductSupplierResponse(ProductSupplier productSupplier){
-        return  ProductSupplierResponse.builder()
-                .mobileNetwork(productSupplier.getJumiaUser().getMobileNetwork())
-                .phoneNumber(productSupplier.getJumiaUser().getPhoneNumber())
-                .userName(productSupplier.getJumiaUser().getUsername())
-                .build();
-    }
+
     private ProductSupplier reRegisterDeletedSupplier(ProductSupplier productSupplier,ProductSupplierRequest updateRequest){
         if (updateRequest.getJumiaUser().getPassword() != null)
             productSupplier.getJumiaUser().setPassword
-                    (updateRequest.getJumiaUser().getPassword());
+                    (passwordEncoder.encode(updateRequest.getJumiaUser().getPassword()));
         if (updateRequest.getJumiaUser().getEmailAddress() != null)
             productSupplier.getJumiaUser().setEmailAddress
                     (updateRequest.getJumiaUser().getEmailAddress());

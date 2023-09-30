@@ -7,11 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@Builder
+
 public class ProductSupplierResponse {
-    private String mobileNetwork;
-    private String userName;
-    private String phoneNumber;
-    private String productSupplierName;
+
+    private String token;
 }

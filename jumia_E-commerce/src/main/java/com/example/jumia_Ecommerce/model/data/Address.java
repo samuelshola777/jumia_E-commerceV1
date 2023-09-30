@@ -21,7 +21,5 @@ public class Address {
     private String locationGovernmentName;
     private String state;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "customer_id")
-//     private Customer customer;
+
 }

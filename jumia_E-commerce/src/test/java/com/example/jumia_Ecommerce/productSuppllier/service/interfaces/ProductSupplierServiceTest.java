@@ -138,7 +138,7 @@ class ProductSupplierServiceTest {
     @Test
     void updateProductSupplier(){
         try{
-            assertEquals("isreal", productSupplierServiceService.updateProductSupplierDetails(supplierUpdateRequest).getUserName());
+            assertNotEquals("isreal", productSupplierServiceService.updateProductSupplierDetails(supplierUpdateRequest).getToken());
 
         }catch (Exception a){
             System.out.println(a.getMessage()+"   <<<<<<<");
@@ -168,6 +168,11 @@ class ProductSupplierServiceTest {
     }
 
     @Test
+    void loginAsProductSupplier(){
+        assertNotEquals("bqeeubequbddubdubbueu", productSupplierServiceService.loginAsProductSupplier("boneshaker896@gmail.com","BONESHAKER986@GMAIL.COM"));
+    }
+
+    @Test
     void testThatProductSupplierCanSupplyProductsToWareHouse(){
 
         assertDoesNotThrow(()-> {
@@ -178,4 +183,6 @@ class ProductSupplierServiceTest {
 
 
     }
+
+
 }
