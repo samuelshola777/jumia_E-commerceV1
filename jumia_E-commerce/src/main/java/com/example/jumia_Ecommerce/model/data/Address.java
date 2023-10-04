@@ -22,4 +22,14 @@ public class Address {
     private String state;
 
 
+    public static boolean containsAlphabet(String phoneNumber) {
+        // Use a regular expression to check if the phone number contains any alphabet characters
+        return phoneNumber.matches(".*[a-zA-Z].*");
+    }
+    public static void main(String[] args) {
+
+        System.out.println(containsAlphabet("090992237272-"));
+    }
+
+
 }
